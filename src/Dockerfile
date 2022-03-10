@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 WORKDIR /app
 EXPOSE 80
 
@@ -16,7 +16,8 @@ FROM build AS publish
 RUN dotnet publish "WebMVC.csproj" -c Release -o /app/publish
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebMVC.dll"]
